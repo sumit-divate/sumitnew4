@@ -1,33 +1,53 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My First Web Page</title>
-  </head>
-  <body>
-    <marquee>Basic HTML Tags</marquee>
-    <h1>this is an H1 heading</h1>
-    <h2>this is an H1 heading</h2>
-    <h3>this is an H1 heading</h3>
-    <h4>this is an H1 heading</h4>
-    <h5>this is an H1 heading</h5>
-    <p>THIS is an simple </p>
-    <hr>
-
-    first<or>second line </or>
-    <blockquote>This is an Blockquote</blockquote>
-    <pre>pre formatted text presserves spaces</pre>
-
-    <p>
-      <b>bold</b>
-      <i>itialized</i>
-      <u>swap</u>
-      <sup>superscript</sup>
-      <sub>subscript</sub>
-      <em>emphasized</em>
-      <small>small</small>
-      <del>deleted</del>
-      <ins>inserted</ins>
-      <code>inline code</code>
-    </p>
-  </body>
-</html>
+//UDP Sever
+import java.net.*; 
+import java.net.InetAddress; 
+class UDPServer 
+{ 
+public static void main(String args[])throws Exception 
+{ 
+DatagramSocket serverSocket = new DatagramSocket(9876); 
+byte[] receiveData=new byte[1024]; 
+byte[] sendData=new byte[1024]; 
+while(true) 
+{ 
+System.out.println("Server is Up"); 
+DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
+serverSocket.receive(receivePacket); 
+String sentence=new String(receivePacket.getData()); 
+System.out.println("RECEIVED:"+sentence); 
+InetAddress IPAddress=receivePacket.getAddress(); 
+int port=receivePacket.getPort(); 
+String capitalizedSentence=sentence.toUpperCase(); 
+sendData=capitalizedSentence.getBytes();
+DatagramPacket sendPacket=new 
+DatagramPacket(sendData,sendData.length,IPAddress,port); 
+serverSocket.send(sendPacket); 
+} 
+} 
+}
+//UDP Client
+import java.io.*; 
+import java.net.*; 
+import java.net.InetAddress; 
+class UDPClient 
+{ 
+public static void main(String[] args)throws Exception 
+{ 
+BufferedReader inFromUser=new BufferedReader(new InputStreamReader(System.in)); 
+DatagramSocket clientSocket=new DatagramSocket(); 
+InetAddress IPAddress=InetAddress.getByName("localhost"); 
+byte[] sendData=new byte[1024]; 
+byte[] receiveData=new byte[1024]; 
+System.out.println("Enter the sting to be converted in to Upper case");
+String sentence=inFromUser.readLine(); 
+sendData=sentence.getBytes(); 
+DatagramPacket sendPacket=new 
+DatagramPacket(sendData,sendData.length,IPAddress,9876); 
+clientSocket.send(sendPacket); 
+DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
+clientSocket.receive(receivePacket); 
+String modifiedSentence=new String(receivePacket.getData()); 
+System.out.println("FROM SERVER:"+modifiedSentence); 
+clientSocket.close(); 
+} 
+}
