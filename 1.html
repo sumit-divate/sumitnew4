@@ -1,53 +1,133 @@
-//UDP Sever
-import java.net.*; 
-import java.net.InetAddress; 
-class UDPServer 
-{ 
-public static void main(String args[])throws Exception 
-{ 
-DatagramSocket serverSocket = new DatagramSocket(9876); 
-byte[] receiveData=new byte[1024]; 
-byte[] sendData=new byte[1024]; 
-while(true) 
-{ 
-System.out.println("Server is Up"); 
-DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
-serverSocket.receive(receivePacket); 
-String sentence=new String(receivePacket.getData()); 
-System.out.println("RECEIVED:"+sentence); 
-InetAddress IPAddress=receivePacket.getAddress(); 
-int port=receivePacket.getPort(); 
-String capitalizedSentence=sentence.toUpperCase(); 
-sendData=capitalizedSentence.getBytes();
-DatagramPacket sendPacket=new 
-DatagramPacket(sendData,sendData.length,IPAddress,port); 
-serverSocket.send(sendPacket); 
-} 
-} 
-}
-//UDP Client
-import java.io.*; 
-import java.net.*; 
-import java.net.InetAddress; 
-class UDPClient 
-{ 
-public static void main(String[] args)throws Exception 
-{ 
-BufferedReader inFromUser=new BufferedReader(new InputStreamReader(System.in)); 
-DatagramSocket clientSocket=new DatagramSocket(); 
-InetAddress IPAddress=InetAddress.getByName("localhost"); 
-byte[] sendData=new byte[1024]; 
-byte[] receiveData=new byte[1024]; 
-System.out.println("Enter the sting to be converted in to Upper case");
-String sentence=inFromUser.readLine(); 
-sendData=sentence.getBytes(); 
-DatagramPacket sendPacket=new 
-DatagramPacket(sendData,sendData.length,IPAddress,9876); 
-clientSocket.send(sendPacket); 
-DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
-clientSocket.receive(receivePacket); 
-String modifiedSentence=new String(receivePacket.getData()); 
-System.out.println("FROM SERVER:"+modifiedSentence); 
-clientSocket.close(); 
-} 
-}
+[10/16, 05:17] +91 96064 69357: Lab Program 7:
+Develop JavaScript program (with HTML/CSS) for:
+a) Converting JSON text to JavaScript Object
+b) Convert JSON results into a date
+c) Converting From JSON To CSV and CSV to JSON
+d) Create hash from string using crypto.createHash() method
+
+Solution:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JSON & Crypto Demo</title>
+<style>
+body{font-family:Arial;background:#eef2ff;margin:0;padding:20px}
+h2{text-align:center;color:#333}
+.card{background:#fff;padding:15px;margin:15px auto;border-radius:12px;max-width:550px;
+box-shadow:0 3px 10px rgba(0,0,0,.1)}
+textarea,input{width:100%;padding:8px;margin-top:6px;font-family:monospace;
+border:1px solid #ccc;border-radius:6px}
+button{background:#4a6cf7;color:#fff;border:0;padding:6px 12px;margin-top:8px;
+border-radius:6px;cursor:pointer}
+button:hover{background:#3451d1}
+pre{background:#f5f7ff;padding:8px;border-radius:6px;white-space:pre-wrap;font-size:13px}
+</style>
+</head>
+<body>
+<h2>✨ JSON & Crypto Operations ✨</h2>
+
+<div class="card">
+<h3>(a) JSON → Object</h3>
+<textarea id="a" placeholder='Type JSON here, e.g. {"name":"Aarav","age":22}'></textarea>
+<button onclick="A()">Convert</button><pre id="o1"></pre>
+</div>
+
+<div class="card">
+<h3>(b) JSON Date → JS Date</h3>
+<input id="b" placeholder='{"date":"2025-10-15"}'>
+<button onclick="B()">Convert</button><pre id="o2"></pre>
+</div>
+
+<div class="card">
+<h3>(c) JSON ↔ CSV</h3>
+<textarea id="c1" placeholder='[{"name":"Aarav","age":22},{"name":"Diya","age":25}]'></textarea>
+<button onclick="C1()">JSON→CSV</button><pre id="o3"></pre>
+<textarea id="c2" placeholder='Aarav,22\nDiya,25'></textarea>
+<button onclick="C2()">CSV→JSON</button><pre id="o4"></pre>
+</div>
+
+<div class="card">
+<h3>(d) String → SHA256</h3>
+<input id="d" placeholder="Enter any text to hash">
+<button onclick="D()">Generate Hash</button><pre id="o5"></pre>
+</div>
+
+<script>
+function A(){try{o1.textContent=JSON.stringify(JSON.parse(a.value),null,2)}catch{o1.textContent="❌ Invalid JSON"}}
+function B(){try{o2.textContent=new Date(JSON.parse(b.value).date)}catch{o2.textContent="❌ Invalid Date JSON"}}
+function C1(){try{o3.textContent=JSON.parse(c1.value).map(x=>Object.values(x).join(",")).join("\n")}catch{o3.textContent="❌ Invalid JSON"}}
+function C2(){o4.textContent=JSON.stringify(c2.value.trim().split("\n").map(r=>{let[n,a]=r.split(",");return{name:n,age:+a}}),null,2)}
+async function D(){let h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(d.value));
+o5.textContent=Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+</script>
+</body>
+</html>
+[10/16, 05:22] +91 96064 69357: <!--8.a. Develop a PHP program (with HTML/CSS) to keep track of the number of
+visitors visiting the web page and to display this count of visitors, with
+relevant headings.-->
+<?php
+$f="counter.txt";
+if(!file_exists($f))file_put_contents($f,0);
+$c=(int)file_get_contents($f)+1;
+file_put_contents($f,$c);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><title>Visitor Counter</title>
+<style>
+body{font-family:Arial;text-align:center;background:#f5f5f5;margin-top:50px}
+.box{background:#fff;border:2px solid #ccc;padding:20px;display:inline-block;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Welcome!</h1>
+<p>You are visitor number: <b><?php echo $c; ?></b></p>
+</div>
+</body>
+</html>
+
+
+
+<!--b. Develop a PHP program (with HTML/CSS) to sort the student records
+which are stored in the database using selection sort.-->
+<?php
+$conn=new mysqli("localhost","root","","student_db");
+if($conn->connect_error)die("DB failed");
+$r=$conn->query("SELECT * FROM students");
+$students=[];
+while($row=$r->fetch_assoc())$students[]=$row;
+
+function selSort(&$a,$k){
+$n=count($a);
+for($i=0;$i<$n-1;$i++){
+$m=$i;
+for($j=$i+1;$j<$n;$j++)
+ if($a[$j][$k]<$a[$m][$k])$m=$j;
+if($m!=$i){$t=$a[$i];$a[$i]=$a[$m];$a[$m]=$t;}
+}}
+selSort($students,'marks');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><title>Sorted Records</title>
+<style>
+body{font-family:Arial;background:#f5f5f5}
+table{width:60%;margin:auto;border-collapse:collapse;background:#fff;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+th,td{padding:10px;border-bottom:1px solid #ddd} th{background:#f4b400;color:#fff}
+tr:hover{background:#f1f1f1}
+</style>
+</head>
+<body>
+<h1 style="text-align:center">Students Sorted by Marks</h1>
+<table>
+<tr><th>ID</th><th>Name</th><th>Marks</th></tr>
+<?php foreach($students as $s): ?>
+<tr><td><?=$s['id']?></td><td><?=$s['name']?></td><td><?=$s['marks']?></td></tr>
+<?php endforeach; ?>
+</table>
+</body>
+</html>
