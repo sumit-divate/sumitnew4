@@ -1,51 +1,41 @@
-[10/16, 05:17] +91 96064 69357: Lab Program 7:
-Develop JavaScript program (with HTML/CSS) for:
-a) Converting JSON text to JavaScript Object
-b) Convert JSON results into a date
-c) Converting From JSON To CSV and CSV to JSON
-d) Create hash from string using crypto.createHash() method
+If 8th a and b programme is done then write this programme for upcoming lab.
 
-Solution:
+<!--9. Develop jQuery script (with HTML/CSS) for: a. Appends the content at the
+end of the existing paragraph and list. b. Change the state of the element with
+CSS style using animate() method c. Change the color of any div that is animated.-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>JSON & Crypto Demo</title>
+<title>jQuery Task</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-body{font-family:Arial;background:#eef2ff;margin:0;padding:20px}
-h2{text-align:center;color:#333}
-.card{background:#fff;padding:15px;margin:15px auto;border-radius:12px;max-width:550px;
-box-shadow:0 3px 10px rgba(0,0,0,.1)}
-textarea,input{width:100%;padding:8px;margin-top:6px;font-family:monospace;
-border:1px solid #ccc;border-radius:6px}
-button{background:#4a6cf7;color:#fff;border:0;padding:6px 12px;margin-top:8px;
-border-radius:6px;cursor:pointer}
-button:hover{background:#3451d1}
-pre{background:#f5f7ff;padding:8px;border-radius:6px;white-space:pre-wrap;font-size:13px}
+body{font-family:Arial;background:#f9f9f9;margin:20px}
+.container{max-width:600px;margin:auto;padding:20px;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+button{margin:5px;padding:8px 15px;background:#007bff;color:#fff;border:0;border-radius:4px;cursor:pointer}
+button:hover{background:#0056b3}
+.box{width:100px;height:100px;margin:20px auto;background:#f4b400;position:relative}
 </style>
 </head>
 <body>
-<h2>✨ JSON & Crypto Operations ✨</h2>
-
-<div class="card">
-<h3>(a) JSON → Object</h3>
-<textarea id="a" placeholder='Type JSON here, e.g. {"name":"Aarav","age":22}'></textarea>
-<button onclick="A()">Convert</button><pre id="o1"></pre>
+<div class="container">
+<h2>jQuery Demo</h2>
+<p>Existing paragraph.</p>
+<ul><li>First</li><li>Second</li></ul>
+<button id="append">Append</button>
+<button id="animate">Animate</button>
+<button id="color">Change Color</button>
+<div class="box"></div>
 </div>
-
-<div class="card">
-<h3>(b) JSON Date → JS Date</h3>
-<input id="b" placeholder='{"date":"2025-10-15"}'>
-<button onclick="B()">Convert</button><pre id="o2"></pre>
-</div>
-
-<div class="card">
-<h3>(c) JSON ↔ CSV</h3>
-<textarea id="c1" placeholder='[{"name":"Aarav","age":22},{"name":"Diya","age":25}]'></textarea>
-<button onclick="C1()">JSON→CSV</button><pre id="o3"></pre>
-<textarea id="c2" placeholder='Aarav,22\nDiya,25'></textarea>
-<button onclick="C2()">CSV→JSON</button><pre id="o4"></pre>
-</div>
+<script>
+$(function(){
+  $("#append").click(()=>{$("p").append(" Appended.");$("ul").append("<li>New</li>")});
+  $("#animate").click(()=>{$(".box").animate({width:"200px",height:"200px",left:"50px"},1e3)});
+  $("#color").click(()=>{$(".box").css("background","#28a745")});
+});
+</script>
+</body>
+</html></div>
 
 <div class="card">
 <h3>(d) String → SHA256</h3>
@@ -131,3 +121,4 @@ tr:hover{background:#f1f1f1}
 </table>
 </body>
 </html>
+
