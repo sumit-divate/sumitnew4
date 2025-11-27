@@ -1,112 +1,104 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Time Table</title>
-    <style>
-      table
-      {
-        border-collapse:collapse;
-        width:70%;
-      }
-      th,td
-      {
-        border:1px solid black;
-        padding:5px;
-        text-align:center;
-      }
-      th
-      {
-        background:lightgray;
-      }
-      .lab
-      {
-        background:lightpink;
-      }
-      .elective
-      {
-        background:lightgreen;
-      }
-      tfoot
-      {
-        background:lightgray;
-      }
-    </style>
-  </head>
-  <body>
-    <center><h2>Time Table</h2></center>
-    <table>
-      <thead>
-        <tr>
-          <th>DAY/TIME</th>
-          <th>9-10</th>
-          <th>10-11</th>
-          <th>11-12</th>
-          <th>lunch</th>
-          <th>12-1</th>
-        </tr>
-      </thead>
+TCP Server
 
-      <tbody>
-        <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-          <td rowspan="5">Break</td>
-          <td class="elective">Elective</td>
-        </tr>
+import java.net.*; 
 
-                <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-          
-          <td class="elective">Elective</td>
-        </tr>
+import java.io.*; 
 
-                <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-         
-          <td class="elective">Elective</td>
-        </tr>
+public class TCPS 
 
-                <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-          
-          <td class="elective">Elective</td>
-        </tr>
+{ 
 
-                <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-          
-          <td class="elective">Elective</td>
-        </tr>
+public static void main(String[] args) throws Exception 
 
-                <tr>
-          <td>Mon</td>
-          <td>Maths</td>
-          <td>SEPM</td>
-          <td class="lab">WT LAB</td>
-        
-          <td class="elective">Elective</td>
-        </tr>
-      </tbody>
+{ 
 
-      <tfoot>
-        <tr>
-          <td colspan="6">End of time table</td>
-        </tr>
-      </tfoot>
-    </table>
-  </body>
-</html>
+ServerSocket sersock=new ServerSocket(4000); 
+
+System.out.println("Server ready for connection"); 
+
+Socket sock=sersock.accept(); 
+
+System.out.println("Connection Is successful and waiting for chatting"); 
+
+InputStream istream=sock.getInputStream(); 
+
+BufferedReader fileRead=new BufferedReader(new InputStreamReader(istream)); 
+
+String fname=fileRead.readLine(); 
+
+BufferedReader ContentRead=new BufferedReader(new FileReader(fname)); 
+
+OutputStream ostream=sock.getOutputStream(); 
+
+PrintWriter pwrite=new PrintWriter(ostream,true); 
+
+String str; 
+
+while((str=ContentRead.readLine())!=null){ 
+
+pwrite.println(str); 
+sock.close(); 
+
+sersock.close(); 
+
+pwrite.close(); 
+
+fileRead.close(); 
+
+ContentRead.close(); 
+
+} 
+
+}
+
+//TCP Client
+
+import java.net.*; 
+
+import java.io.*; 
+
+public class TCPC 
+
+{ 
+
+public static void main(String[] args) throws Exception 
+
+{ 
+
+Socket sock=new Socket("127.0.01",4000); 
+
+System.out.println("Enter the filename"); 
+
+BufferedReader keyRead=new BufferedReader(new InputStreamReader(System.in)); 
+
+String fname=keyRead.readLine(); 
+
+OutputStream ostream=sock.getOutputStream(); 
+
+PrintWriter pwrite=new PrintWriter(ostream,true); 
+
+pwrite.println(fname); 
+
+InputStream istream=sock.getInputStream();
+}
+BufferedReader socketRead=new BufferedReader(new InputStreamReader(istream)); 
+
+String str; 
+
+while((str=socketRead.readLine())!=null) 
+
+{ 
+
+System.out.println(str); 
+
+} 
+
+pwrite.close(); 
+
+socketRead.close(); 
+
+keyRead.close(); 
+
+} 
+
+}
