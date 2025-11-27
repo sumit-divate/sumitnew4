@@ -1,124 +1,103 @@
-If 8th a and b programme is done then write this programme for upcoming lab.
+//UDP Sever
 
-<!--9. Develop jQuery script (with HTML/CSS) for: a. Appends the content at the
-end of the existing paragraph and list. b. Change the state of the element with
-CSS style using animate() method c. Change the color of any div that is animated.-->
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>jQuery Task</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-body{font-family:Arial;background:#f9f9f9;margin:20px}
-.container{max-width:600px;margin:auto;padding:20px;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.1)}
-button{margin:5px;padding:8px 15px;background:#007bff;color:#fff;border:0;border-radius:4px;cursor:pointer}
-button:hover{background:#0056b3}
-.box{width:100px;height:100px;margin:20px auto;background:#f4b400;position:relative}
-</style>
-</head>
-<body>
-<div class="container">
-<h2>jQuery Demo</h2>
-<p>Existing paragraph.</p>
-<ul><li>First</li><li>Second</li></ul>
-<button id="append">Append</button>
-<button id="animate">Animate</button>
-<button id="color">Change Color</button>
-<div class="box"></div>
-</div>
-<script>
-$(function(){
-  $("#append").click(()=>{$("p").append(" Appended.");$("ul").append("<li>New</li>")});
-  $("#animate").click(()=>{$(".box").animate({width:"200px",height:"200px",left:"50px"},1e3)});
-  $("#color").click(()=>{$(".box").css("background","#28a745")});
-});
-</script>
-</body>
-</html></div>
+import java.net.*; 
 
-<div class="card">
-<h3>(d) String → SHA256</h3>
-<input id="d" placeholder="Enter any text to hash">
-<button onclick="D()">Generate Hash</button><pre id="o5"></pre>
-</div>
+import java.net.InetAddress; 
 
-<script>
-function A(){try{o1.textContent=JSON.stringify(JSON.parse(a.value),null,2)}catch{o1.textContent="❌ Invalid JSON"}}
-function B(){try{o2.textContent=new Date(JSON.parse(b.value).date)}catch{o2.textContent="❌ Invalid Date JSON"}}
-function C1(){try{o3.textContent=JSON.parse(c1.value).map(x=>Object.values(x).join(",")).join("\n")}catch{o3.textContent="❌ Invalid JSON"}}
-function C2(){o4.textContent=JSON.stringify(c2.value.trim().split("\n").map(r=>{let[n,a]=r.split(",");return{name:n,age:+a}}),null,2)}
-async function D(){let h=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(d.value));
-o5.textContent=Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("")}
-</script>
-</body>
-</html>
-[10/16, 05:22] +91 96064 69357: <!--8.a. Develop a PHP program (with HTML/CSS) to keep track of the number of
-visitors visiting the web page and to display this count of visitors, with
-relevant headings.-->
-<?php
-$f="counter.txt";
-if(!file_exists($f))file_put_contents($f,0);
-$c=(int)file_get_contents($f)+1;
-file_put_contents($f,$c);
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><title>Visitor Counter</title>
-<style>
-body{font-family:Arial;text-align:center;background:#f5f5f5;margin-top:50px}
-.box{background:#fff;border:2px solid #ccc;padding:20px;display:inline-block;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-</style>
-</head>
-<body>
-<div class="box">
-<h1>Welcome!</h1>
-<p>You are visitor number: <b><?php echo $c; ?></b></p>
-</div>
-</body>
-</html>
+class UDPServer 
 
+{ 
 
+public static void main(String args[])throws Exception 
 
-<!--b. Develop a PHP program (with HTML/CSS) to sort the student records
-which are stored in the database using selection sort.-->
-<?php
-$conn=new mysqli("localhost","root","","student_db");
-if($conn->connect_error)die("DB failed");
-$r=$conn->query("SELECT * FROM students");
-$students=[];
-while($row=$r->fetch_assoc())$students[]=$row;
+{ 
 
-function selSort(&$a,$k){
-$n=count($a);
-for($i=0;$i<$n-1;$i++){
-$m=$i;
-for($j=$i+1;$j<$n;$j++)
- if($a[$j][$k]<$a[$m][$k])$m=$j;
-if($m!=$i){$t=$a[$i];$a[$i]=$a[$m];$a[$m]=$t;}
-}}
-selSort($students,'marks');
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><title>Sorted Records</title>
-<style>
-body{font-family:Arial;background:#f5f5f5}
-table{width:60%;margin:auto;border-collapse:collapse;background:#fff;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-th,td{padding:10px;border-bottom:1px solid #ddd} th{background:#f4b400;color:#fff}
-tr:hover{background:#f1f1f1}
-</style>
-</head>
-<body>
-<h1 style="text-align:center">Students Sorted by Marks</h1>
-<table>
-<tr><th>ID</th><th>Name</th><th>Marks</th></tr>
-<?php foreach($students as $s): ?>
-<tr><td><?=$s['id']?></td><td><?=$s['name']?></td><td><?=$s['marks']?></td></tr>
-<?php endforeach; ?>
-</table>
-</body>
-</html>
+DatagramSocket serverSocket = new DatagramSocket(9876); 
 
+byte[] receiveData=new byte[1024]; 
+
+byte[] sendData=new byte[1024]; 
+
+while(true) 
+
+{ 
+
+System.out.println("Server is Up"); 
+
+DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
+
+serverSocket.receive(receivePacket); 
+
+String sentence=new String(receivePacket.getData()); 
+
+System.out.println("RECEIVED:"+sentence); 
+
+InetAddress IPAddress=receivePacket.getAddress(); 
+
+int port=receivePacket.getPort(); 
+
+String capitalizedSentence=sentence.toUpperCase(); 
+
+sendData=capitalizedSentence.getBytes();
+DatagramPacket sendPacket=new 
+
+DatagramPacket(sendData,sendData.length,IPAddress,port); 
+
+serverSocket.send(sendPacket); 
+
+} 
+
+} 
+
+}
+
+//UDP Client
+
+import java.io.*; 
+
+import java.net.*; 
+
+import java.net.InetAddress; 
+
+class UDPClient 
+
+{ 
+
+public static void main(String[] args)throws Exception 
+
+{ 
+
+BufferedReader inFromUser=new BufferedReader(new InputStreamReader(System.in)); 
+
+DatagramSocket clientSocket=new DatagramSocket(); 
+
+InetAddress IPAddress=InetAddress.getByName("localhost"); 
+
+byte[] sendData=new byte[1024]; 
+
+byte[] receiveData=new byte[1024]; 
+
+System.out.println("Enter the sting to be converted in to Upper case");
+String sentence=inFromUser.readLine(); 
+
+sendData=sentence.getBytes(); 
+
+DatagramPacket sendPacket=new 
+
+DatagramPacket(sendData,sendData.length,IPAddress,9876); 
+
+clientSocket.send(sendPacket); 
+
+DatagramPacket receivePacket=new DatagramPacket(receiveData,receiveData.length); 
+
+clientSocket.receive(receivePacket); 
+
+String modifiedSentence=new String(receivePacket.getData()); 
+
+System.out.println("FROM SERVER:"+modifiedSentence); 
+
+clientSocket.close(); 
+
+} 
+
+}
