@@ -1,0 +1,59 @@
+/*3. Develop an external style sheet named as 
+“style.css” and provide different styles 
+for h2, h3, hr, p, div, span, time, img & a tags. 
+Apply different CSS selectors for 
+tags and demonstrate the significance of each.*/
+
+body{
+    background:lightgray;
+}     
+
+#box{
+    background:lightblue;
+    padding:15px;
+}
+ /* ID selector */
+h2{
+    color:blue;
+    text-align:center;
+}/* Element + center */
+
+h3:hover{
+    color:red;
+}              /* Pseudo-class */
+
+hr{
+    border:1px dashed black;
+}      /* Element */
+
+p[lang]{
+    font-style:italic;
+} 
+      /* Attribute */
+.highlight{
+    background:yellow;
+    color:purple;
+} 
+   /* Class */
+div p{
+    color:green;
+}               /* Descendant */
+        /* Child */
+h2 + p {
+    color:brown;
+}              /* Adjacent sibling */
+
+time {
+    color:teal;
+}   
+              /* Element */
+p::first-letter {
+    font-size:20px;
+}  /* Pseudo-element */
+
+img,a {
+    border:1px solid black;
+}    /* Multiple */
+a:hover {
+    color:orange;
+}            /* Link pseudo-class */
